@@ -8,7 +8,8 @@ set -u
 XR="$HOME/agsbx/xr.json"
 BIN="$HOME/agsbx/xray"
 [ -f "$XR" ] || { echo "找不到 $XR ，停"; exit 1; }
-cp "$XR" "$XR.bak-stage2"
+# 只备份一次：重复运行不覆盖原始备份，保住回滚点
+[ -f "$XR.bak-stage2" ] || cp "$XR" "$XR.bak-stage2"
 
 python3 - "$XR" << 'PYEOF'
 import json, sys
